@@ -3,6 +3,7 @@ import { Avatar, Col, Row, Select, Card, Typography } from "antd";
 import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi";
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import moment from "moment";
+import { Loader } from "../components";
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -17,7 +18,7 @@ const News = ({ simplified }) => {
     newsCategory,
     count,
   });
-  if (isFetching) return <h1 style={{ marginLeft: "2rem" }}>Loading...</h1>;
+  if (isFetching) return <Loader />;
 
   return (
     <>

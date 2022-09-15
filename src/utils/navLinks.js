@@ -18,14 +18,9 @@ const navLinks = [
     path: "/cryptocurrencies",
     text: "Cryptocurrencies",
   },
+
   {
     id: 3,
-    icon: <MoneyCollectOutlined />,
-    path: "/exchanges",
-    text: "Exchanges",
-  },
-  {
-    id: 4,
     icon: <BulbOutlined />,
     path: "/news",
     text: "News",

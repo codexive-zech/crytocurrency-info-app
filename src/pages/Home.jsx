@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Statistic, Typography } from "antd";
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import { Cryptocurrencies, News } from "../pages";
+import { Loader } from "../components";
 
 const { Title } = Typography;
 
@@ -40,7 +41,7 @@ const Home = () => {
     },
   ];
 
-  if (isFetching) return <h1 style={{ marginLeft: "2rem" }}>Loading...</h1>;
+  if (isFetching) return <Loader />;
   return (
     <>
       <div style={{ marginLeft: "2rem" }}>

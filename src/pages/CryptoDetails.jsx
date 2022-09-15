@@ -3,7 +3,10 @@ import HTMLReactParser from "html-react-parser";
 import millify from "millify";
 import { useParams } from "react-router-dom";
 import { Col, Row, Typography, Select } from "antd";
-import { useGetCryptoDetailQuery } from "../services/cryptoApi";
+import {
+  useGetCryptoDetailQuery,
+  useGetCryptoDetailHistoryQuery,
+} from "../services/cryptoApi";
 import {
   CheckOutlined,
   StopOutlined,
@@ -15,16 +18,19 @@ import {
   FundOutlined,
   MoneyCollectOutlined,
 } from "@ant-design/icons";
+import { LineChart, Loader } from "../components";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 const CryptoDetails = () => {
   const { uuid } = useParams();
-  const [timePeriod, setTimePeriod] = useState("7d");
+  // const [timePeriod, setTimePeriod] = useState("7d");
   const { data, isFetching } = useGetCryptoDetailQuery(uuid);
+
   const cryptoDetails = data?.data?.coin;
-  const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
+
+  // const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
   const stats = [
     {
@@ -88,7 +94,7 @@ const CryptoDetails = () => {
     },
   ];
 
-  if (isFetching) return <h1 style={{ marginLeft: "2rem" }}>Loading...</h1>;
+  if (isFetching) return <Loader />;
 
   return (
     <>
@@ -102,7 +108,7 @@ const CryptoDetails = () => {
             Statistics, Market Cap and Supply.
           </p>
         </Col>
-        <Select
+        {/* <Select
           defaultValue="7d"
           onChange={(value) => setTimePeriod(value)}
           placeholder="Select Time Period"
@@ -111,8 +117,7 @@ const CryptoDetails = () => {
           {time?.map((date) => {
             return <Option key={date}>{date}</Option>;
           })}
-        </Select>
-        {/* Line Chart Later */}
+        </Select> */}
         <Col className="stats-container">
           <Col className="coin-value-statistics">
             <Col className="coin-value-statistics-heading">

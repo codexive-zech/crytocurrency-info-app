@@ -1,11 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import {
-  Home,
-  Cryptocurrencies,
-  CryptoDetails,
-  Exchanges,
-  News,
-} from "./pages";
+import { Home, Cryptocurrencies, CryptoDetails, Error, News } from "./pages";
 import { Navbar, Footer } from "./components";
 import { Layout } from "antd";
 import "./index.css";
@@ -21,10 +15,10 @@ function App() {
           <div className="routes">
             <Routes>
               <Route index element={<Home />} />
-              <Route path="exchanges" element={<Exchanges />} />
               <Route path="cryptocurrencies" element={<Cryptocurrencies />} />
               <Route path="crypto/:uuid" element={<CryptoDetails />} />
               <Route path="news" element={<News />} />
+              <Route path="*" element={<Error />} />
             </Routes>
           </div>
         </Layout>
