@@ -378,6 +378,7 @@ a:hover {
 
 .head {
   margin-left: 1.5rem;
+  text-transform: uppercase;
 }
 
 .link-font {
