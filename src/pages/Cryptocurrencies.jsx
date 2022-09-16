@@ -5,23 +5,25 @@ import millify from "millify";
 import { Row, Col, Card, Input, Typography } from "antd";
 import { Loader } from "../components";
 const { Title } = Typography;
+
 const Cryptocurrencies = ({ simplified }) => {
   const count = simplified ? 10 : 100;
-  const { data: cryptoList, isFetching } = useGetCryptosQuery(count);
-  const [cryptos, setCryptos] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const { data: cryptoList, isFetching } = useGetCryptosQuery(count); // getting list of cryptos from the query endpoint based
+  const [cryptos, setCryptos] = useState([]); // define a state for cryptos
+  const [searchTerm, setSearchTerm] = useState(""); // define a state for search term
 
   useEffect(() => {
     const filterCoin = cryptoList?.data?.coins.filter((coin) =>
       coin.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setCryptos(filterCoin);
-  }, [cryptoList, searchTerm]);
+    ); // filtering cryptocurrencies based on their coin name gotten from search term
+    setCryptos(filterCoin); // setting the cryptos state to the filtered coin
+  }, [cryptoList, searchTerm]); // re-render UI whenever search term state changes or data (crypto list) gotten form the endpoint changes
 
-  if (isFetching) return <Loader />;
+  if (isFetching) return <Loader />; // display loading when fetching data
 
   return (
     <>
+      {/* display this search section when the simplifies props is false */}
       {simplified ? null : (
         <section>
           <Title level={2} className="head">
@@ -30,15 +32,17 @@ const Cryptocurrencies = ({ simplified }) => {
           <div className="search-crypto">
             <Input
               placeholder="Search Cryptocurrency"
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => setSearchTerm(e.target.value)} // changing the input value of the search term
             />
           </div>
         </section>
       )}
 
       <Row className="crypto-card-container" gutter={[15, 15]}>
+        {/* iterating over cryptos state */}
         {cryptos?.map((currency) => {
           return (
+            // crypto card list
             <Col
               xs={24}
               sm={12}

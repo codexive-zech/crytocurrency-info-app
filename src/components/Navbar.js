@@ -9,23 +9,23 @@ const { Title } = Typography;
 const { Item } = Menu;
 
 const Navbar = () => {
-  const [activeMenu, setActiveMenu] = useState(true);
-  const [screenSize, setScreenSize] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(true); //define a state for active menu
+  const [screenSize, setScreenSize] = useState(null); // define a state for screen size
 
   useEffect(() => {
-    const handleScreenSize = setScreenSize(window.innerWidth);
+    const handleScreenSize = setScreenSize(window.innerWidth); // setting the screen size of web app
 
-    window.addEventListener("resize", handleScreenSize);
+    window.addEventListener("resize", handleScreenSize); // listening for a resize event based on the new screen size
 
     // handleScreenSize();
-    return () => window.removeEventListener("resize", handleScreenSize);
+    return () => window.removeEventListener("resize", handleScreenSize); // clean up function for the event
   }, []);
 
   useEffect(() => {
     if (screenSize < 768) {
-      setActiveMenu(false);
+      setActiveMenu(false); // set active menu state to false when it's on a smaller screen
     } else {
-      setActiveMenu(true);
+      setActiveMenu(true); // set active menu state to false when it's on a bigger screen
     }
   }, [screenSize]);
   return (
@@ -42,7 +42,7 @@ const Navbar = () => {
           <MenuOutlined />
         </Button>
       </div>
-
+      {/* display Navbar list only when the active menu state is true */}
       {activeMenu ? (
         <Menu theme="dark">
           {navLinks.map((navLink) => {

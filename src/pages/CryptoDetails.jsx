@@ -1,41 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import HTMLReactParser from "html-react-parser";
 import millify from "millify";
 import { useParams } from "react-router-dom";
-import { Col, Row, Typography, Select } from "antd";
-import {
-  useGetCryptoDetailQuery,
-  useGetCryptoDetailHistoryQuery,
-} from "../services/cryptoApi";
+import { Col, Row, Typography } from "antd";
+import { useGetCryptoDetailQuery } from "../services/cryptoApi";
 import {
   CheckOutlined,
   StopOutlined,
   ExclamationCircleOutlined,
   DollarCircleOutlined,
   NumberOutlined,
-  ThunderboltOutlined,
   TrophyOutlined,
   FundOutlined,
   MoneyCollectOutlined,
 } from "@ant-design/icons";
-import { LineChart, Loader } from "../components";
+import { Loader } from "../components";
 
 const { Title, Text } = Typography;
-const { Option } = Select;
 
 const CryptoDetails = () => {
-  const { uuid } = useParams();
+  const { uuid } = useParams(); // getting the id of single cryptocurrency
   // const [timePeriod, setTimePeriod] = useState("7d");
-  const { data, isFetching } = useGetCryptoDetailQuery(uuid);
+  const { data, isFetching } = useGetCryptoDetailQuery(uuid); // getting cryptocurrency from the query endpoint based on the id
 
-  const cryptoDetails = data?.data?.coin;
+  const cryptoDetails = data?.data?.coin; // destructuring into a single crypto detail (optional chaining)
 
   // const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
   const stats = [
     {
       title: "Price to USD",
-      value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`,
+      value: `$ ${cryptoDetails?.price ? millify(cryptoDetails?.price) : null}`,
       icon: <DollarCircleOutlined />,
     },
     { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
@@ -43,15 +38,16 @@ const CryptoDetails = () => {
     {
       title: "Market Cap",
       value: `$ ${
-        cryptoDetails?.marketCap && millify(cryptoDetails?.marketCap)
+        cryptoDetails?.marketCap ? millify(cryptoDetails?.marketCap) : null
       }`,
       icon: <DollarCircleOutlined />,
     },
     {
       title: "All-time-high(daily avg.)",
       value: `$ ${
-        cryptoDetails?.allTimeHigh?.price &&
-        millify(cryptoDetails?.allTimeHigh?.price)
+        cryptoDetails?.allTimeHigh?.price
+          ? millify(cryptoDetails?.allTimeHigh?.price)
+          : null
       }`,
       icon: <TrophyOutlined />,
     },
@@ -80,15 +76,18 @@ const CryptoDetails = () => {
     {
       title: "Total Supply",
       value: `$ ${
-        cryptoDetails?.supply?.total && millify(cryptoDetails?.supply?.total)
+        cryptoDetails?.supply?.total
+          ? millify(cryptoDetails?.supply?.total)
+          : null
       }`,
       icon: <ExclamationCircleOutlined />,
     },
     {
       title: "Circulating Supply",
       value: `$ ${
-        cryptoDetails?.supply?.circulating &&
-        millify(cryptoDetails?.supply?.circulating)
+        cryptoDetails?.supply?.circulating
+          ? millify(cryptoDetails?.supply?.circulating)
+          : null
       }`,
       icon: <ExclamationCircleOutlined />,
     },
@@ -126,6 +125,7 @@ const CryptoDetails = () => {
               </Title>
               <p>An Overview Showing the Statistics of {cryptoDetails?.name}</p>
             </Col>
+            {/* iterating over the stats array value */}
             {stats.map((stat) => {
               const { icon, title, value } = stat;
               return (
@@ -139,7 +139,7 @@ const CryptoDetails = () => {
               );
             })}
           </Col>
-          {/*  */}
+          {/* Other currency Value */}
           <Col className="other-stats-info">
             <Col className="coin-value-statistics-heading">
               <Title className="coin-details-heading">
@@ -147,6 +147,7 @@ const CryptoDetails = () => {
               </Title>
               <p>An Overview Showing the Statistics of all Cryptocurrency</p>
             </Col>
+            {/* iterating over the generic stats array value */}
             {genericStats.map((stat) => {
               const { icon, title, value } = stat;
               return (

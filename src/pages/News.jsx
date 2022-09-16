@@ -10,18 +10,20 @@ const { Title, Text } = Typography;
 
 const demoImage =
   "https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News";
+
 const News = ({ simplified }) => {
   const count = simplified ? 6 : 18;
-  const [newsCategory, setNewsCategory] = useState("Cryptocurrency");
-  const { data } = useGetCryptosQuery(100);
+  const [newsCategory, setNewsCategory] = useState("Cryptocurrency"); // define a state for new category
+  const { data } = useGetCryptosQuery(100); // getting list of cryptocurrencies from the query endpoint
   const { data: cryptoNews, isFetching } = useGetCryptoNewsQuery({
     newsCategory,
     count,
-  });
+  }); // getting cryptocurrency news from the query endpoint
   if (isFetching) return <Loader />;
 
   return (
     <>
+      {/* display this select search section when the simplifies props is false */}
       {simplified ? null : (
         <Col span={24}>
           <Title level={2} className="head">
@@ -30,7 +32,7 @@ const News = ({ simplified }) => {
           <Select
             style={{ margin: "1.3rem" }}
             className="select-news"
-            onChange={(value) => setNewsCategory(value)}
+            onChange={(value) => setNewsCategory(value)} // set a new value for the news category state
             showSearch
             optionFilterProp="children"
             filterOption={(option, input) =>
@@ -39,6 +41,7 @@ const News = ({ simplified }) => {
             placeholder="Select a Cryptocurrency"
           >
             <Option value="Cryptocurrency">Cryptocurrency</Option>
+            {/* iterating over list of cryptocurrencies */}
             {data?.data?.coins.map((coin) => {
               return (
                 <Option value={coin.name} key={coin.name}>
@@ -50,6 +53,7 @@ const News = ({ simplified }) => {
         </Col>
       )}
       <Row gutter={[32, 32]}>
+        {/* iterating over the list of cryptocurrency new */}
         {cryptoNews?.value.map((news, index) => {
           return (
             <Col xs={24} sm={12} lg={8} key={index}>

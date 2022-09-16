@@ -9,9 +9,9 @@ import { Loader } from "../components";
 const { Title } = Typography;
 
 const Home = () => {
-  const { data, isFetching } = useGetCryptosQuery(10);
+  const { data, isFetching } = useGetCryptosQuery(10); // getting cryptos from the query endpoint
 
-  const getStats = data?.data?.stats;
+  const getStats = data?.data?.stats; // getting the crypto stats data
 
   const totalCoinStats = [
     {
@@ -41,6 +41,21 @@ const Home = () => {
     },
   ];
 
+  const components = [
+    {
+      id: 1,
+      title: "Top 10 Cryptocurrencies in the World",
+      link: "/cryptocurrencies",
+      component: <Cryptocurrencies simplified={true} />,
+    },
+    {
+      id: 2,
+      title: "Latest Cryptocurrencies News",
+      link: "/news",
+      component: <News simplified={true} />,
+    },
+  ];
+
   if (isFetching) return <Loader />;
   return (
     <>
@@ -49,6 +64,7 @@ const Home = () => {
           Global Crypto Statistics
         </Title>
         <Row>
+          {/* Iterating over the cryptos stats */}
           {totalCoinStats.map((coinStats) => {
             const { id, title, value } = coinStats;
             return (
@@ -57,8 +73,25 @@ const Home = () => {
               </Col>
             );
           })}
+          {/* End of iterating over the cryptos stats */}
         </Row>
-        <div className="home-heading-container">
+        {components.map((comp) => {
+          const { id, title, link, component } = comp;
+          return (
+            <section>
+              <div className="home-heading-container" key={id}>
+                <Title level={2} className="home-title">
+                  {title}
+                </Title>
+                <Title level={3} className="show-more">
+                  <Link to={link}>Show More</Link>
+                </Title>
+              </div>
+              {component}
+            </section>
+          );
+        })}
+        {/* <div className="home-heading-container">
           <Title level={2} className="home-title">
             Top 10 Cryptocurrencies in the World
           </Title>
@@ -75,7 +108,7 @@ const Home = () => {
             <Link to="/news">Show More</Link>
           </Title>
         </div>
-        <News simplified={true} />
+        <News simplified={true} /> */}
       </div>
     </>
   );
